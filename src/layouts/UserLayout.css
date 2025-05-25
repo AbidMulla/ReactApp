@@ -1,0 +1,44 @@
+/* User Layout CSS */
+
+/* Layout background */
+.layout-bg {
+  background-color: #f6f7f9;
+}
+
+/* Mobile header styling */
+.mobile-header {
+  height: 60px;
+  padding: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-toggle {
+  display: flex;
+  align-items: center;
+  padding-left: 0.5rem;
+}
+
+.user-profile-section {
+  display: flex;
+  align-items: center;
+  padding-right: 0.5rem;
+}
+
+/* Main content area styling */
+.main-content {
+  /* Default styles for mobile */
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  padding-top: 60px; /* Space for mobile header */
+}
+
+/* Desktop styles (medium screens and up) */
+@media (min-width: 768px) {
+  .main-content {
+    width: 83.33% !important;
+    max-width: 83.33% !important;
+    margin-left: auto !important;
+    padding-top: 0; /* No mobile header on desktop */
+  }
+}

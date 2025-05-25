@@ -1,0 +1,54 @@
+.video-player-container {
+  width: 100%;
+  background-color: #000;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.player-wrapper {
+  position: relative;
+  /* padding-top: 56.25%;  */
+  width: 100%;
+  background-color: #000;
+}
+
+.bitmovin-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Custom Bitmovin UI overrides */
+:root {
+  --bmpui-primary-color: #3152e8;
+  --bmpui-accent-color: #3152e8;
+}
+
+/* Custom styles for the Bitmovin player UI */
+.bmpui-ui-container .bmpui-ui-seekbar .bmpui-seekbar .bmpui-seekbar-playbackposition-marker {
+  background-color: #3152e8 !important;
+}
+
+.bmpui-ui-container .bmpui-ui-controlbar {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent) !important;
+}
+
+.bmpui-ui-container .bmpui-ui-button {
+  color: white !important;
+}
+
+.bmpui-ui-container .bmpui-ui-button:hover {
+  color: #3152e8 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .video-player-container {
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+}
