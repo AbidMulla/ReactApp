@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import './VideoPlayer.css';
-import VideoTabs from './VideoTabs';
 
 function VideoPlayer() {
   const playerRef = useRef(null);
@@ -86,16 +85,9 @@ function VideoPlayer() {
   };
 
   return (
-    <div className="course-content-container">
-      <div className="video-player-container">
-        <div className="player-wrapper">
-          <div ref={playerContainerRef} className="bitmovin-player"></div>
-        </div>
-      </div>
-      
-      {/* Course Tabs */}
-      <div className="course-tabs-container mt-4">
-        <VideoTabs />
+    <div className="video-player-container">
+      <div className="player-wrapper">
+        <div ref={playerContainerRef} className="bitmovin-player"></div>
       </div>
     </div>
   );

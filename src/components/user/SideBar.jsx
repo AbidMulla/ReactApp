@@ -151,7 +151,7 @@ function SideBar() {
     <>
       {/* Logo for desktop view */}
       {!isMobile && (
-        <div className="logo-container border-end" style={{backgroundColor:'#f6f7f9', height: '73px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.75rem' }}>
+        <div className="logo-container border-end" style={{backgroundColor:'#f6f7f9', height: '62px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.75rem' }}>
           <Link to="/user/dashboard" className="text-decoration-none d-flex justify-content-center">
             <img 
               src={Logo} 

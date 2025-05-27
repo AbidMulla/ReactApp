@@ -1,0 +1,85 @@
+.delete-account-container {
+  padding: 0;
+}
+
+.warning-card {
+  display: flex;
+  background-color: #fff4f4;
+  /* border-radius: 12px; */
+  padding: 20px;
+  border-left: 4px solid #dc3545;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.warning-icon {
+  display: flex;
+  align-items: flex-start;
+  margin-right: 16px;
+  color: #dc3545;
+}
+
+.warning-content h4 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #dc3545;
+  margin-bottom: 12px;
+}
+
+.warning-content p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.warning-content p:last-child {
+  margin-bottom: 0;
+}
+
+.warning-content ul {
+  margin-bottom: 16px;
+  padding-left: 20px;
+}
+
+.warning-content li {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+.warning-content a {
+  color: #3152e8;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.warning-content a:hover {
+  text-decoration: underline;
+}
+
+.delete-account-action {
+  margin-top: 24px;
+}
+
+/* Modal customizations */
+.modal-title {
+  display: flex;
+  align-items: center;
+}
+
+.alert-danger {
+  background-color: #fff4f4;
+  border-color: #f8d7da;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .warning-card {
+    flex-direction: column;
+    padding: 16px;
+  }
+  
+  .warning-icon {
+    margin-right: 0;
+    margin-bottom: 12px;
+  }
+}

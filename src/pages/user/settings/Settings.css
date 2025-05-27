@@ -1,0 +1,90 @@
+.settings-container {
+  min-height: 100%;
+}
+
+.settings-header {
+  margin-bottom: 24px;
+}
+
+.settings-header h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.settings-header p {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+/* Tabs styling */
+.settings-tabs-container {
+  margin-bottom: 24px;
+}
+
+.settings-tabs {
+  display: flex;
+  border-bottom: 1px solid #e0e0e0;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+.settings-tabs::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+.settings-tab-item {
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #666;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.settings-tab-item:hover {
+  color: #3152e8;
+}
+
+.settings-tab-item.active {
+  color: #3152e8;
+  border-bottom-color: #3152e8;
+}
+
+/* Content container */
+.settings-content-container {
+  min-height: 400px;
+}
+
+.settings-card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .settings-container {
+    padding: 16px;
+  }
+  
+  .settings-header {
+    margin-bottom: 16px;
+  }
+  
+  .settings-tab-item {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+  
+  .settings-card {
+    padding: 16px;
+  }
+}

@@ -1,14 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Icon } from '@iconify/react';
 import course1 from '../../../assets/images/course/course1.png';
 import course2 from '../../../assets/images/course/course2.png';
 import course3 from '../../../assets/images/course/course3.png';
 import course4 from '../../../assets/images/course/course4.png';
+import { useNavigate } from 'react-router-dom';
+import './CourseFilter.css';
 
 
 function CourseTab() {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
+  const [showFilterPopup, setShowFilterPopup] = useState(false);
+  const [filters, setFilters] = useState({
+    level: [],
+    price: [],
+    category: [],
+    rating: null
+  });
+  const filterPopupRef = useRef(null);
   
+  // Close filter popup when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (filterPopupRef.current && !filterPopupRef.current.contains(event.target)) {
+        setShowFilterPopup(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  // Toggle filter selection
+  const toggleFilter = (type, value) => {
+    setFilters(prevFilters => {
+      if (type === 'rating') {
+        return { ...prevFilters, rating: value };
+      }
+      
+      const updatedArray = [...prevFilters[type]];
+      const index = updatedArray.indexOf(value);
+      
+      if (index > -1) {
+        updatedArray.splice(index, 1);
+      } else {
+        updatedArray.push(value);
+      }
+      
+      return { ...prevFilters, [type]: updatedArray };
+    });
+  };
+
+  // Clear all filters
+  const clearAllFilters = () => {
+    setFilters({
+      level: [],
+      price: [],
+      category: [],
+      rating: null
+    });
+  };
+
   // Sample course data - this would typically come from an API
   const courses = [
     {
@@ -94,16 +149,134 @@ function CourseTab() {
             )}
           </div>
         </div>
+        
+        {/* Filter Button */}
+        <div className="filter-container position-relative">
+          <button 
+            className="filter-button" 
+            onClick={() => setShowFilterPopup(!showFilterPopup)}
+          >
+            <Icon icon="mdi:filter-outline" width="18" height="18" className="me-1" />
+            Filter
+          </button>
+          
+          {/* Filter Popup */}
+          {showFilterPopup && (
+            <div className="filter-popup" ref={filterPopupRef}>
+              <div className="filter-popup-header">
+                <h5>See All Filters</h5>
+                <button className="clear-all-btn" onClick={clearAllFilters}>Clear All</button>
+              </div>
+              
+              <div className="filter-section">
+                <h6>Category</h6>
+                <div className="filter-options">
+                  {['React', 'JavaScript', 'UI/UX', 'Node.js', 'Python'].map(category => (
+                    <div className="filter-option" key={category}>
+                      <input 
+                        type="checkbox" 
+                        id={`category-${category}`} 
+                        checked={filters.category.includes(category)}
+                        onChange={() => toggleFilter('category', category)}
+                      />
+                      <label htmlFor={`category-${category}`}>{category}</label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="filter-section">
+                <h6>Level</h6>
+                <div className="filter-options">
+                  {['Beginner', 'Intermediate', 'Advanced'].map(level => (
+                    <div className="filter-option" key={level}>
+                      <input 
+                        type="checkbox" 
+                        id={`level-${level}`} 
+                        checked={filters.level.includes(level)}
+                        onChange={() => toggleFilter('level', level)}
+                      />
+                      <label htmlFor={`level-${level}`}>{level}</label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="filter-section">
+                <h6>Price</h6>
+                <div className="filter-options">
+                  {['Free', 'Paid'].map(price => (
+                    <div className="filter-option" key={price}>
+                      <input 
+                        type="checkbox" 
+                        id={`price-${price}`} 
+                        checked={filters.price.includes(price)}
+                        onChange={() => toggleFilter('price', price)}
+                      />
+                      <label htmlFor={`price-${price}`}>{price}</label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="filter-section">
+                <h6>Rating</h6>
+                <div className="filter-options rating-options">
+                  {[4, 3, 2, 1].map(rating => (
+                    <div className="filter-option" key={rating}>
+                      <input 
+                        type="radio" 
+                        id={`rating-${rating}`} 
+                        name="rating"
+                        checked={filters.rating === rating}
+                        onChange={() => toggleFilter('rating', rating)}
+                      />
+                      <label htmlFor={`rating-${rating}`}>
+                        {rating}+ <Icon icon="mdi:star" className="star-icon" />
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="filter-popup-footer">
+                <button className="apply-filter-btn" onClick={() => setShowFilterPopup(false)}>
+                  Apply Filters
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="row">
         {courses
-          .filter(course => 
-            searchTerm === '' || 
-            course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            course.instructor.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            course.level.toLowerCase().includes(searchTerm.toLowerCase())
-          )
+          .filter(course => {
+            // Search term filter
+            const matchesSearch = searchTerm === '' || 
+              course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              course.instructor.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              course.level.toLowerCase().includes(searchTerm.toLowerCase());
+            
+            // Level filter
+            const matchesLevel = filters.level.length === 0 || 
+              filters.level.includes(course.level);
+            
+            // Price filter
+            const matchesPrice = filters.price.length === 0 || 
+              (filters.price.includes('Free') && course.price === 'Free') ||
+              (filters.price.includes('Paid') && course.price !== 'Free');
+            
+            // Rating filter
+            const matchesRating = filters.rating === null || 
+              course.rating >= filters.rating;
+            
+            // Category filter - assuming we'd add category to the course data
+            const matchesCategory = filters.category.length === 0;
+            // In a real app, you'd check: filters.category.includes(course.category)
+            
+            return matchesSearch && matchesLevel && matchesPrice && matchesRating && matchesCategory;
+          })
           .map(course => (
           <div key={course.id} className="col-md-6 col-lg-3 mb-2">
             <div className="course-card">
@@ -145,7 +318,7 @@ function CourseTab() {
                 
                 <div className="course-footer">
                   <div className={`course-price ${course.price === 'Free' ? 'free-price' : 'paid-price'}`}>{course.price}</div>
-                  <button className={`watch-now-btn ${course.price === 'Free' ? 'free-btn' : 'paid-btn'}`}>
+                  <button onClick={() => navigate('/user/coursesDetails')} className={`watch-now-btn ${course.price === 'Free' ? 'free-btn' : 'paid-btn'}`}>
                     {course.price === 'Free' ? (
                       <Icon icon="mdi:play-circle-outline" width="20" height="20" />
                     ) : (
